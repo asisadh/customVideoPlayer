@@ -11,17 +11,16 @@ import UIKit
 
 class ListingViewWireFrame: ListingViewWireFrameProtocol{
     
-    
-    
-    
     static func createVideoListingViewModule() -> UIViewController {
-        
-        let storyBoard : UIStoryboard = UIStoryboard(name: "SmartMobe", bundle:nil)
-        let viewController = storyBoard.instantiateViewController(withIdentifier: "ListingNavigationView")
+//
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Video", bundle:nil)
+        let viewController = storyBoard.instantiateViewController(withIdentifier: "VideoListNavigationView")
         
         let listingViewController = viewController.children.first as? ListingView
         
-        if let view:ListingViewProtocol = listingViewController{
+//        let listingViewController = ListingView.instantiate(from: .Video)
+        
+        if let view: ListingViewProtocol = listingViewController{
             let presenter: ListingViewPresenterProtocol & ListingViewInteractorOutputProtocol = ListingViewPresenter()
             let interactor: ListingViewInteractorInputProtocol & ListingViewRemoteDataManagerOutputProtocol = ListingViewInteractor()
             let remoteDataManager: ListingViewRemoteDataManagerInputProtocol = ListingViewRemoteDataManager()
@@ -41,11 +40,11 @@ class ListingViewWireFrame: ListingViewWireFrameProtocol{
         return viewController
     }
    
-    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData) {
-//        let detailView = DetailViewWireFrame.createDetailViewModule(video: video)
-//        if let view = view as? UIViewController{
-//            view.navigationController?.pushViewController(detailView, animated: true)
-//        }
+    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData, delegate: VideoDetailViewDelegate) {
+        let detailView = VideoDetailWireFrame.createVideoDetailViewModule(video: video, delegate: delegate)
+        if let view = view as? UIViewController{
+            view.navigationController?.pushViewController(detailView, animated: true)
+        }
     }
     
     func presentErrorScreen(from view: ListingViewProtocol, errorMessage message: String) {

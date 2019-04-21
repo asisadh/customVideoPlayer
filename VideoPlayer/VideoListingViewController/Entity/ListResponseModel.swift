@@ -29,11 +29,14 @@ struct ListResponseModel: Codable {
 struct ListResponseData: Codable {
     let id: Int?
     let title, source: String?
+    let thumbnail: String?
     let views: Int?
+    let uploaderImage: String?
     let uploadedBy, uploadedOn: String?
     
     enum CodingKeys: String, CodingKey {
-        case id, title, source, views
+        case id, title, source, views, thumbnail
+        case uploaderImage = "uploade_image"
         case uploadedBy = "uploaded_by"
         case uploadedOn = "uploaded_on"
     }

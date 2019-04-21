@@ -11,16 +11,26 @@ import SDWebImage
 
 class ListingViewTableCellView: UITableViewCell{
     
-    @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var uploaderImageView: UIImageView!
     
     func setup(data: ListResponseData){
         
-//        if let id = data.id,
-//            let imageUrl = data.url{
-//            titleLabel.text = String(id)
-//            backgroundImage?.sd_setImage(with: URL(string: imageUrl),placeholderImage: UIImage(named: ""))
-//        }
+        if let thumbnailUrl = data.thumbnail,
+            let title = data.title,
+            let views = data.views,
+            let uploadedBy = data.uploadedBy,
+            let uploadedOn = data.uploadedOn,
+            let uploaderImage = data.uploaderImage
+            {
+            titleLabel.text = title
+//            thumbnailImageView?.sd_setImage(with: URL(string: thumbnailUrl),placeholderImage: UIImage(named: ""))
+            thumbnailImageView.image = UIImage(named: thumbnailUrl)
+            descriptionLabel.text = uploadedBy + " ● " + String(views) + " views" + " ● " + uploadedOn
+            uploaderImageView.image = UIImage(named: uploaderImage)
+        }
     }
     
 }

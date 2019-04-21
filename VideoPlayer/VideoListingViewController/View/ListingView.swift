@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreMedia
 
 class ListingView: UIViewController{
     
@@ -18,6 +19,8 @@ class ListingView: UIViewController{
             searchTextField.delegate = self
         }
     }
+    @IBOutlet weak var miniPlayerView: VideoPlayerView!
+    
     
     private let identifier = "ListingViewTableCellView"
     private let refreshControl = UIRefreshControl()
@@ -29,6 +32,7 @@ class ListingView: UIViewController{
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data ...")
         presenter?.viewDidLoad()
+        miniPlayerView.isHidden = true
     }
 }
 
@@ -47,6 +51,13 @@ extension ListingView: ListingViewProtocol{
     
     func hideLoading() {
         print("loading removed")
+    }
+    
+    func playViewInMiniView(source: String, time: CMTime) {
+        miniPlayerView.isHidden = false
+        miniPlayerView.configure(url: source)
+        miniPlayerView.playVideoTo(current: time)
+        miniPlayerView.hideseekBar()
     }
 }
 
@@ -70,7 +81,7 @@ extension ListingView: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200.0
+        return 290.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -99,14 +110,14 @@ extension ListingView: UITextFieldDelegate{
 
 extension ListingView{
     @objc private func refreshListData(_ sender: Any) {
-        if let key = searchTextField.text{
-            if key.isEmpty{
-                refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data ...")
-                presenter?.viewUpdatedVideoList()
-            }else{
-                refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data for \(key)")
-                presenter?.viewSearchedVideoList(key: key)
-            }
-        }
+//        if let key = searchTextField.text{
+//            if key.isEmpty{
+//                refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data ...")
+//                presenter?.viewUpdatedVideoList()
+//            }else{
+//                refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data for \(key)")
+//                presenter?.viewSearchedVideoList(key: key)
+//            }
+//        }
     }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreMedia
 
 protocol ListingViewProtocol: class{
     var presenter: ListingViewPresenterProtocol? {get set}
@@ -15,6 +16,7 @@ protocol ListingViewProtocol: class{
     func showLoading()
     func hideLoading()
     func refreshView()
+    func playViewInMiniView(source: String, time: CMTime)
 }
 
 protocol ListingViewPresenterProtocol: class{
@@ -66,6 +68,6 @@ protocol ListingViewRemoteDataManagerOutputProtocol: class{
 protocol ListingViewWireFrameProtocol: class{
     static func createVideoListingViewModule() -> UIViewController
     
-    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData)
+    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData, delegate: VideoDetailViewDelegate)
     func presentErrorScreen(from view: ListingViewProtocol, errorMessage message: String)
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreMedia
 
 class ListingViewPresenter: ListingViewPresenterProtocol{
     
@@ -43,7 +44,7 @@ class ListingViewPresenter: ListingViewPresenterProtocol{
     
     func showVideoDetail(video: ListResponseData) {
         if let view = view{
-            wireFrame?.presentVideoDetailScreen(from: view, forVideo: video)
+            wireFrame?.presentVideoDetailScreen(from: view, forVideo: video, delegate: self)
         }
     }
     
@@ -71,5 +72,14 @@ extension ListingViewPresenter: ListingViewInteractorOutputProtocol{
     func onError(message: String) {
         view?.hideLoading()
         showError(message: message)
+    }
+}
+
+extension ListingViewPresenter: VideoDetailViewDelegate{
+    func playBackVideoInMiniView(source: String?, time: CMTime?) {
+        if let source = source,
+            let time = time{
+            view?.playViewInMiniView(source: source, time: time)
+        }
     }
 }
