@@ -30,7 +30,7 @@ class ListingView: UIViewController{
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshListData(_:)), for: .valueChanged)
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data ...")
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Video Data ...")
         presenter?.viewDidLoad()
         miniPlayerView.isHidden = true
     }
@@ -110,15 +110,9 @@ extension ListingView: UITextFieldDelegate{
 
 extension ListingView{
     @objc private func refreshListData(_ sender: Any) {
-//        if let key = searchTextField.text{
-//            if key.isEmpty{
-//                refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data ...")
-//                presenter?.viewUpdatedVideoList()
-//            }else{
-//                refreshControl.attributedTitle = NSAttributedString(string: "Fetching Image Data for \(key)")
-//                presenter?.viewSearchedVideoList(key: key)
-//            }
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
+            self.presenter?.viewUpdatedVideoList()
+        })
     }
 }
 
