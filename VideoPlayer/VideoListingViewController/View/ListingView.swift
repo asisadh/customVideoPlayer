@@ -55,7 +55,7 @@ extension ListingView: ListingViewProtocol{
     
     func playViewInMiniView(source: String, time: CMTime) {
         miniPlayerView.isHidden = false
-        miniPlayerView.configure(url: source)
+        miniPlayerView.configure(url: source, delegate: self)
         miniPlayerView.playVideoTo(current: time)
         miniPlayerView.hideseekBar()
     }
@@ -119,5 +119,13 @@ extension ListingView{
 //                presenter?.viewSearchedVideoList(key: key)
 //            }
 //        }
+    }
+}
+
+extension ListingView: VideoPlayerViewDelegate {
+    func didReachEndOfView(){
+        UIView.transition(with: view, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.miniPlayerView.isHidden = true
+        })
     }
 }

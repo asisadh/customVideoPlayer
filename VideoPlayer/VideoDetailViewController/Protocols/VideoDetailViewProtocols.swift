@@ -22,14 +22,18 @@ protocol VideoDetailViewPresenterProtocol: class{
     var view: VideoDetailViewProtocol? {get set}
     var wireFrame: VideoDetailViewWireFrameProtocol? {get set}
     
+    var numberOfVideos: Int {get set}
+    var listOfVideos:[ListResponseData] { get set}
+    
     var video: ListResponseData { get }
     var delegate: VideoDetailViewDelegate { get }
     
     func viewDidLoad()
+    func video(at row: Int) -> ListResponseData
 }
 
 protocol VideoDetailViewWireFrameProtocol: class{
-    static func createVideoDetailViewModule(video: ListResponseData, delegate: VideoDetailViewDelegate) -> UIViewController
+    static func createVideoDetailViewModule(video: ListResponseData, videoList: [ListResponseData], delegate: VideoDetailViewDelegate) -> UIViewController
 }
 
 protocol VideoDetailViewDelegate: class{

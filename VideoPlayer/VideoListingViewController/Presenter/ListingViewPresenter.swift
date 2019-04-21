@@ -44,7 +44,7 @@ class ListingViewPresenter: ListingViewPresenterProtocol{
     
     func showVideoDetail(video: ListResponseData) {
         if let view = view{
-            wireFrame?.presentVideoDetailScreen(from: view, forVideo: video, delegate: self)
+            wireFrame?.presentVideoDetailScreen(from: view, forVideo: video, videoList: listOfVideos, delegate: self)
         }
     }
     

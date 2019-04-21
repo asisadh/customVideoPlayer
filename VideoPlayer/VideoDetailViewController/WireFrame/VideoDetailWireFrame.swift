@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 class VideoDetailWireFrame: VideoDetailViewWireFrameProtocol{
-    static func createVideoDetailViewModule(video: ListResponseData, delegate: VideoDetailViewDelegate) -> UIViewController {
+    static func createVideoDetailViewModule(video: ListResponseData, videoList: [ListResponseData], delegate: VideoDetailViewDelegate) -> UIViewController {
         let vc = VideoDetailView.instantiate(from: .Video)
         let view = vc as VideoDetailViewProtocol
-        let presenter: VideoDetailViewPresenterProtocol = VideoDetailViewPresenter(video: video, delegate: delegate)
+        let presenter: VideoDetailViewPresenterProtocol = VideoDetailViewPresenter(video: video, videoList: videoList, delegate: delegate)
         let wireFrame: VideoDetailViewWireFrameProtocol = VideoDetailWireFrame()
         
         view.presenter = presenter

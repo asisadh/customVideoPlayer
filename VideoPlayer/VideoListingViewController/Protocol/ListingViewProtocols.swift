@@ -68,6 +68,6 @@ protocol ListingViewRemoteDataManagerOutputProtocol: class{
 protocol ListingViewWireFrameProtocol: class{
     static func createVideoListingViewModule() -> UIViewController
     
-    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData, delegate: VideoDetailViewDelegate)
+    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData, videoList: [ListResponseData], delegate: VideoDetailViewDelegate)
     func presentErrorScreen(from view: ListingViewProtocol, errorMessage message: String)
 }

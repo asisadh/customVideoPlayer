@@ -40,8 +40,8 @@ class ListingViewWireFrame: ListingViewWireFrameProtocol{
         return viewController
     }
    
-    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData, delegate: VideoDetailViewDelegate) {
-        let detailView = VideoDetailWireFrame.createVideoDetailViewModule(video: video, delegate: delegate)
+    func presentVideoDetailScreen(from view: ListingViewProtocol, forVideo video: ListResponseData, videoList: [ListResponseData], delegate: VideoDetailViewDelegate) {
+        let detailView = VideoDetailWireFrame.createVideoDetailViewModule(video: video, videoList: videoList, delegate: delegate)
         if let view = view as? UIViewController{
             view.navigationController?.pushViewController(detailView, animated: true)
         }

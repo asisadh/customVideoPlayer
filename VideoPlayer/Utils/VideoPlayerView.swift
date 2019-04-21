@@ -10,12 +10,18 @@ import UIKit
 import AVKit
 import AVFoundation
 
+protocol VideoPlayerViewDelegate{
+    func didReachEndOfView()
+}
+
 class VideoPlayerView: UIView {
     
     var playerLayer: AVPlayerLayer?
     var player: AVPlayer?
     var isLoop: Bool = false
     var currentTime: CMTime?
+    
+    var delegate: VideoPlayerViewDelegate?
     
     let playPauseButton: UIButton = {
         let button = UIButton(type: .system)
@@ -58,7 +64,8 @@ class VideoPlayerView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func configure(url: String) {
+    func configure(url: String, delegate: VideoPlayerViewDelegate? = nil) {
+        self.delegate = delegate
         if let videoURL = URL(string: url) {
             #warning("Remove this line for API Integration")
             let videoURLFromStorage = URL(fileURLWithPath: url)
@@ -110,6 +117,8 @@ class VideoPlayerView: UIView {
                     self.videoSlider.value = Float(seconds/durationSeconds)
                 }
             })
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(reachTheEndOfTheVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem)
         }
     }
     
@@ -165,6 +174,10 @@ class VideoPlayerView: UIView {
     func stop() {
         player?.pause()
         player?.seek(to: CMTime.zero)
+    }
+    
+    @objc func reachTheEndOfTheVideo(_ notification: Notification) {
+        delegate?.didReachEndOfView()
     }
 }
 
